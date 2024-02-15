@@ -65,9 +65,18 @@ class DatasetTransformer1:
             print(current_df.count())
             current_date_str = datetime.now().strftime('%Y-%m-%d')
             # Update end_date and flag in current_df_spark if advertising_id is matched but user_id is not matched in new_df_spark
-            current_df = current_df.withColumn("end_date", F.when(~F.col("user_id").isin([row.user_id for row in new_df.select("user_id").collect()]), current_date).otherwise(F.col("end_date")))
+            #current_df = current_df.withColumn("end_date", F.when(~F.col("user_id").isin([row.user_id for row in new_df.select("user_id").collect()]), current_date).otherwise(F.col("end_date")))
 
-            current_df = current_df.withColumn("flag_active", F.when(~F.col("user_id").isin([row.user_id for row in new_df.select("user_id").collect()]), "False").otherwise(F.col("flag_active")))
+            #current_df = current_df.withColumn("flag_active", F.when(~F.col("user_id").isin([row.user_id for row in new_df.select("user_id").collect()]), "False").otherwise(F.col("flag_active")))
+
+            current_df = current_df.withColumn("end_date", F.when((F.col("advertising_id").isin([row.advertising_id for row in new_df.select("advertising_id").collect()])) &
+                                          (~F.col("user_id").isin([row.user_id for row in new_df.select("user_id").collect()])), 
+                                          current_date).otherwise(F.col("end_date")))
+
+            current_df = current_df.withColumn("flag_active", F.when((F.col("advertising_id").isin([row.advertising_id for row in new_df.select("advertising_id").collect()])) &
+                                          (~F.col("user_id").isin([row.user_id for row in new_df.select("user_id").collect()])), 
+                                          "N").otherwise(F.col("flag_active")))
+
 
             print(current_df.count())
             print(new_df.count())
