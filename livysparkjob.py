@@ -75,7 +75,7 @@ class DatasetTransformer1:
 
             current_df = current_df.withColumn("flag_active", F.when((F.col("advertising_id").isin([row.advertising_id for row in new_df.select("advertising_id").collect()])) &
                                           (~F.col("user_id").isin([row.user_id for row in new_df.select("user_id").collect()])), 
-                                          "N").otherwise(F.col("flag_active")))
+                                          "False").otherwise(F.col("flag_active")))
 
 
             print(current_df.count())
