@@ -1,0 +1,12 @@
+{
+  "source_bucket": "s3://dileep-landingbucket-batch01/datasets/Viewership.parquet",
+  "destination_bucket": "s3://dileep-stagingbucket-batch01/viewership",
+  "transformations": {
+    "location_source": "concat_ws(',', location_source)",
+    "user_latitude": "cast(user_lat as decimal(14, 7))",
+    "user_longitude": "cast(user_long as decimal(14, 7))"
+  },
+  "masking": {
+    "advertising_id": "sha2(advertising_id, 256)"
+  }
+}

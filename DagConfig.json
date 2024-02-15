@@ -1,0 +1,6 @@
+{
+  "source_bucket": "s3://dileep-landingbucket-batch01/datasets/Actives.parquet",
+  "destination_bucket": "s3://dileep-rawbucket-batch01/DagActives",
+  "Vsource_bucket": "s3://dileep-landingbucket-batch01/datasets/Viewership.parquet",
+  "Vdestination_bucket": "s3://dileep-rawbucket-batch01/DagViewership"
+}

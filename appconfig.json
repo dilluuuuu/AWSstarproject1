@@ -1,0 +1,14 @@
+{
+  "source_bucket": "s3://dileep-landingbucket-batch01/datasets/Actives.parquet",
+  "destination_bucket": "s3://dileep-stagingbucket-batch01/actives",
+  "transformations": {
+    "location_source": "concat_ws(',', location_source)",
+    "user_latitude": "cast(user_latitude as decimal(14, 7))",
+    "user_longitude": "cast(user_longitude as decimal(14, 7))"
+  },
+  "masking": {
+    "advertising_id": "sha2(advertising_id, 256)",
+    "user_id": "sha2(user_id, 256)"
+  }
+}
+
