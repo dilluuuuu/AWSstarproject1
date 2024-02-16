@@ -46,7 +46,7 @@ class DatasetTransformer1:
     def lookup_table(self,df1):
         try:
             current_df=spark.read.format("delta").load("s3://dileep-stagingbucket-batch01/lookup/delta_table/")   
-            df = spark.read.format("parquet").load("s3://dileep-rawbucket-batch01/DagActives")
+            df = spark.read.format("parquet").load("s3://dileep-rawbucket-batch01/actives/")
             print(df.count())
             df=df[['advertising_id', 'user_id']]
             df1=df1[['advertising_id', 'user_id']]
@@ -96,7 +96,7 @@ class DatasetTransformer1:
             print(current_df.count())
         except Exception as e:
             print("NONE")
-            df=spark.read.format("parquet").load("s3://dileep-rawbucket-batch01/DagActives")
+            df=spark.read.format("parquet").load("s3://dileep-rawbucket-batch01/actives")
             df=df[['advertising_id', 'user_id']]
             print(df.count())
             df1=df1[['advertising_id', 'user_id']]
